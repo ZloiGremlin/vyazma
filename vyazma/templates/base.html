@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" media="all" href="{{ STATIC_URL }}css/reset.css"/>
+    <link type="text/css" rel="stylesheet" media="all" href="{{ STATIC_URL }}css/style.css"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+</head>
+<body>
+<div id="container">
+ <div id="top" class="ofl">
+     <a id="logo" class="lfl" href="/"><img src="{{ STATIC_URL }}images/logo.jpg" alt=""/></a>
+ </div>
+    <div id="menu">
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/">Каталог товаров</a>
+                <ul>
+                    {% for item in categories %}
+                        <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% for region in regions %}
+            <li><a href="#" onclick="return false;">{{ region.name }}</a>
+            <ul>
+                {% for item in region.traders.all %}
+                    <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+                {% endfor %}
+            </ul>
+            </li>
+        {% endfor %}
+            <li><a href="/">Контакты</a></li>
+        </ul>
+        <div class="clr"></div>
+    </div>
+    <div id="main" class="ofl">
+        {% block menu %}
+
+        {% endblock %}
+        <div id="right">
+            <div class="breadcrumb">
+                {% block breadcrumb %}
+
+                {% endblock %}
+            </div>
+            {% block content %}
+
+
+            {% endblock %}
+        </div>
+    </div>
+    <div id="footer">
+        <div class="copy">Все права защищены. 2013 г.</div>
+    </div>
+</div>
+
+</body>
+</html>

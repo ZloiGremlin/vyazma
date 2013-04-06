@@ -1,0 +1,35 @@
+{% extends 'front.html' %}
+{% load thumbnail catalog_tags %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+
+
+{% block breadcrumb %}
+    <a href="/">Главная</a> / <a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a> / {{ product.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+
+    <div class="gallery">
+        <div class="image">
+            {% thumbnail product.get_main_image.image "300x300" upscale=False as img %}
+                <img src="{{ img.url }}" style="margin: {{ img|margin:"300x300" }}" alt=""/>
+            {% endthumbnail %}
+        </div>
+    {% for image in product.images.all %}
+        {% thumbnail image.image "x50" upscale=False as img %}
+            <img src="{{ img.url }}" alt=""/>
+        {% endthumbnail %}
+    {% endfor %}
+    </div>
+
+    <div class="info">
+        <div class="price"><strong>Стоимость:</strong> <span>{{ product.unit_price|floatformat:0|price }} руб.</span></div>
+        <div class="trader"><strong>Продавец:</strong> <a href="{{ product.trader.get_absolute_url }}">{{ product.trader }}</a> <span>({{ product.trader.region }})</span></div>
+        <p>{{ product.description }}</p>
+    </div>
+
+{% endblock %}
+

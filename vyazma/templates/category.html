@@ -1,0 +1,34 @@
+{% extends 'front.html' %}
+{% load thumbnail catalog_tags %}
+
+{% block title %}Вязьма Онлайн{% endblock %}
+
+
+
+{% block breadcrumb %}
+    <a href="/">Главная</a> / <a href="/">Каталог товаров</a> / {{ category.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ category.name }}</h1>
+
+    <div class="product-list">
+    {% for product in category.products.all %}
+        <div class="product">
+            <div class="image">
+                {% thumbnail product.get_main_image.image '220x230' upscale=False as img %}
+                <a href="{{ product.get_absolute_url }}"><img src="{{ img.url }}" style="margin: {{ img|margin:"220x230" }}" alt="{{ product.name }}"/></a>
+                {% endthumbnail %}
+            </div>
+            <a class="name" href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+
+            <div class="price">{{ product.unit_price|floatformat:0|price }} руб.</div>
+        </div>
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+            <div class="clr"></div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+{% endblock %}
+

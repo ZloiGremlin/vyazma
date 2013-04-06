@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}Вязьма Онлайн{% endblock %}
+
+{% block menu %}
+    <div id="left">
+        <h2>Каталог товаров</h2>
+        <ul>
+            {% for item in categories %}
+                {% if category == item %}
+                    <li>{{ item.name }}</li>
+                {% else %}
+                    <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block content %}
+
+
+{% endblock %}
+
