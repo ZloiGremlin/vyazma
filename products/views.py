@@ -1,10 +1,15 @@
 # vim:fileencoding=utf-8
 from django.views.generic import TemplateView, DetailView
-from products.models import Category, Trader, Product
+from products.models import Category, Trader, Product, Region
 
 
 class FrontView(TemplateView):
     template_name = 'front.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(FrontView, self).get_context_data(**kwargs)
+        ctx['traders'] = Trader.objects.all()
+        return ctx
 
 class CategoryDetail(DetailView):
     slug_field = 'url'
@@ -27,3 +32,11 @@ class ProductDetail(DetailView):
     slug_url_kwarg = 'slug'
     model = Product
     template_name = 'product.html'
+
+
+class RegionView(DetailView):
+    template_name = 'traders.html'
+    model = Region
+    slug_field = 'url'
+    slug_url_kwarg = 'url'
+

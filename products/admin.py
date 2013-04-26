@@ -1,5 +1,5 @@
 # vim:fileencoding=utf-8
-from products.models import Trader, Region, Category, Images, Product
+from products.models import Trader, Region, Category, Images, Product, Size, Color
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from sorl.thumbnail import ImageField
@@ -19,6 +19,7 @@ class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ['name', 'category', 'active', 'sort', 'unit_price', 'trader']
     list_filter = ['trader', 'category', 'active']
     list_editable = ['active', 'sort']
+    filter_horizontal = ['size', 'color']
     inlines = [AdminInlineImage]
 
 
@@ -40,3 +41,5 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Trader, SlugAdmin)
 admin.site.register(Region, SlugAdmin)
+admin.site.register(Size)
+admin.site.register(Color)

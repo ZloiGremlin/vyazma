@@ -6,4 +6,4 @@ def categories(request):
 
 
 def regions(request):
-    return {'regions': Region.objects.all()}
+    return {'regions': Region.objects.filter(active=True)}

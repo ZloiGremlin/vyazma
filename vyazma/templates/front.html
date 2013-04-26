@@ -23,7 +23,24 @@
 {% endblock %}
 
 {% block content %}
+    <div class="traders">
+        {% for trader in traders %}
 
+            <div class="trader">
+                <div class="tlogo">
+                    {% thumbnail trader.image '200x200' upscale=False as img %}
+                        <a href="{{ trader.get_absolute_url }}"><img src="{{ img.url }}" style="margin: {{ img|margin:'200x200' }}" alt="{{ trader.name }}"/></a>
+                    {% endthumbnail %}
+                </div>
+                <a href="{{ trader.get_absolute_url }}">{{ trader.name }}</a>
+            </div>
+
+
+            {% if forloop.counter|divisibleby:3 or forloop.last %}
+                <div class="clr"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
 
 {% endblock %}
 

@@ -6,17 +6,31 @@
 
 
 {% block breadcrumb %}
-    <a href="/">Главная</a> / <a href="/">{{ trader.region }}</a> / {{ trader.name }}
+    <a href="/">Главная</a> / {{ object.name }}
 {% endblock %}
 
 {% block content %}
-    <h1>{{ trader.name }}</h1>
+    <h1>{{ object.name }}</h1>
+    <div class="traders">
+    {% for trader in object.traders.all %}
 
-    <div class="tlogo">
-    {% thumbnail trader.image '250' upscale=False as img %}
-        <img src="{{ img.url }}" alt="{{ trader.name }}"/>
-    {% endthumbnail %}
+        <div class="trader">
+            <div class="tlogo">
+                {% thumbnail trader.image '200x200' upscale=False as img %}
+                    <a href="{{ trader.get_absolute_url }}"><img src="{{ img.url }}" style="margin: {{ img|margin:'200x200' }}" alt="{{ trader.name }}"/></a>
+                {% endthumbnail %}
+            </div>
+            <a href="{{ trader.get_absolute_url }}">{{ trader.name }}</a>
+        </div>
+
+
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+            <div class="clr"></div>
+        {% endif %}
+    {% endfor %}
     </div>
+
+
 
     <p>{{ trader.description }}</p>
 

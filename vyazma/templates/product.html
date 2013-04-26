@@ -14,13 +14,18 @@
 
     <div class="gallery">
         <div class="image">
-            {% thumbnail product.get_main_image.image "300x300" upscale=False as img %}
-                <img src="{{ img.url }}" style="margin: {{ img|margin:"300x300" }}" alt=""/>
-            {% endthumbnail %}
+            {% for image in product.images.all %}
+                <a class="fancy" rel="gallery" href="{{ image.image.url }}">
+                {% thumbnail image.image "300x300" upscale=False as img %}
+                    <img rel='i-{{ forloop.counter }}' src="{{ img.url }}" style="margin: {{ img|margin:"300x300" }}; {% if not forloop.first %}display: none;{% endif %}"  alt=""/>
+                {% endthumbnail %}
+                </a>
+            {% endfor %}
+
         </div>
     {% for image in product.images.all %}
         {% thumbnail image.image "x50" upscale=False as img %}
-            <img src="{{ img.url }}" alt=""/>
+            <a href="#" class="thumb" rel='i-{{ forloop.counter }}'><img  src="{{ img.url }}" alt=""/></a>
         {% endthumbnail %}
     {% endfor %}
     </div>
@@ -28,6 +33,19 @@
     <div class="info">
         <div class="price"><strong>Стоимость:</strong> <span>{{ product.unit_price|floatformat:0|price }} руб.</span></div>
         <div class="trader"><strong>Продавец:</strong> <a href="{{ product.trader.get_absolute_url }}">{{ product.trader }}</a> <span>({{ product.trader.region }})</span></div>
+        {% if product.size.count %}
+            <div class="trader"><strong>Размеры:</strong> {% for item in product.size.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+        {% endif %}
+        {% if product.color.count %}
+            <div class="trader"><strong>Цвет:</strong> {% for item in product.color.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+        {% endif %}
+        {% if product.properties %}
+            <div class="trader"><strong>Состав:</strong> {{ product.properties }}</div>
+        {% endif %}
+        {% if product.producer %}
+            <div class="trader"><strong>Производитель:</strong> {{ product.producer }}</div>
+        {% endif %}
+
         <p>{{ product.description }}</p>
     </div>
 

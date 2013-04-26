@@ -42,6 +42,7 @@ class Region(models.Model):
     url = models.CharField(max_length=255, verbose_name=u'Адрес(URL)', unique=True)
     description = models.TextField(blank=True, verbose_name=u'Описание категории')
     sort = models.IntegerField(verbose_name=u'Приоритет', default=10, help_text=u'Чем меньше значение тем товар выше в списке')
+    active = models.BooleanField(verbose_name=u'Отображение', default=False)
 
     def __unicode__(self):
         return self.name
@@ -82,6 +83,10 @@ class Product(BaseProduct):
     category = TreeForeignKey('Category', verbose_name=u'Категория', related_name='products', null=True, blank=True)
     trader = models.ForeignKey('Trader', verbose_name=u'Продавец', related_name='products')
     description = models.TextField(verbose_name=u'Описание товара', null=True, blank=True)
+    properties = models.TextField(verbose_name=u'Состав', null=True, blank=True)
+    producer = models.CharField(max_length=255, blank=True, null=True, verbose_name=u'Производитель')
+    color = models.ManyToManyField('Color', max_length=255, blank=True, null=True, verbose_name=u'Цвет')
+    size = models.ManyToManyField('Size', max_length=255, blank=True, null=True, verbose_name=u'Размер')
     sort = models.IntegerField(default=100, verbose_name=u'Приоритет')
 
     def __unicode__(self):
@@ -114,3 +119,27 @@ class Images(models.Model):
 
     def __unicode__(self):
         return u'Фото товара'
+
+
+class Size(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = u'Размер'
+        verbose_name_plural = u'Размеры'
+
+    name = models.CharField(max_length=255, verbose_name=u'Название')
+
+    def __unicode__(self):
+        return self.name
+
+
+class Color(models.Model):
+    class Meta:
+        ordering = ['name']
+        verbose_name = u'Цвет'
+        verbose_name_plural = u'Цвета'
+
+    name = models.CharField(max_length=255, verbose_name=u'Название')
+
+    def __unicode__(self):
+        return self.name
