@@ -10,12 +10,12 @@
 
             {% recursetree categories %}
                 <li>
-                {% if category == node %}
+                {% if category == node or product.category == node %}
                     {{ node.name }}
                  {% else %}
                     <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
                 {% endif %}
-                    {% if not node.is_leaf_node and category == node or category in node.get_descendants %}
+                    {% if not node.is_leaf_node and category == node or category in node.get_descendants or product.category == node or product.category == node.get_descendants  %}
                         <ul class="children">
                             {{ children }}
                         </ul>
