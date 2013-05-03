@@ -16,7 +16,7 @@ class AdminInlineImage(AdminImageMixin, admin.TabularInline):
 class ProductAdmin(AdminImageMixin, admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ['name']
-    list_display = ['name', 'category', 'active', 'sort', 'unit_price', 'trader']
+    list_display = ['name', 'slug', 'category', 'active', 'sort', 'unit_price', 'trader']
     list_filter = ['trader', 'category', 'active']
     list_editable = ['active', 'sort']
     filter_horizontal = ['size', 'color']
