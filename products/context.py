@@ -2,7 +2,7 @@ from products.models import Category, Region
 
 
 def categories(request):
-    return {'categories': Category.objects.filter(level=0)}
+    return {'categories': Category.tree.all()}
 
 
 def regions(request):

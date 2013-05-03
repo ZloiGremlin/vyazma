@@ -21,13 +21,16 @@
             <li><a href="/">Каталог товаров</a>
                 <ul>
                     {% for item in categories %}
+                        {% if item.level == 0 %}
                         <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </li>
         {% for region in regions %}
             <li><a href="{{ region.get_absolute_url }}">{{ region.name }}</a>
             <ul>
+
                 {% for item in region.traders.all %}
                     <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
                 {% endfor %}

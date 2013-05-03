@@ -41,11 +41,11 @@ a:hover {
 #container {
     width: 1000px;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 #top {
-    height: 90px;
+    height: 120px;
 }
 
 #menu {
@@ -142,6 +142,16 @@ a:hover {
     background: url("../images/ndash.jpg") no-repeat left 14px;
     border-bottom: 1px dotted #bbb;
 }
+
+#left ul ul {
+    margin-bottom: 0;
+}
+
+#left ul li li {
+    border: 0;
+    font-size: 12px;
+}
+
 
 #right {
     float: right;

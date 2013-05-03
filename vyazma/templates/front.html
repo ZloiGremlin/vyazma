@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load thumbnail %}
+{% load thumbnail mptt_tags %}
 
 {% block title %}Вязьма Онлайн{% endblock %}
 
@@ -7,13 +7,21 @@
     <div id="left">
         <h2>Каталог товаров</h2>
         <ul>
-            {% for item in categories %}
-                {% if category == item %}
-                    <li>{{ item.name }}</li>
-                {% else %}
-                    <li><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></li>
+
+            {% recursetree categories %}
+                <li>
+                {% if category == node %}
+                    {{ node.name }}
+                 {% else %}
+                    <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
                 {% endif %}
-            {% endfor %}
+                    {% if not node.is_leaf_node and category == node or category in node.get_descendants %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
         </ul>
     </div>
 {% endblock %}
