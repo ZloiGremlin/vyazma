@@ -6,7 +6,7 @@
 
 
 {% block breadcrumb %}
-    <a href="/">Главная</a> /
+    <a href="/">Главная</a> / <a href="/">Каталог товаров</a> /
     {% for ancestor in product.category.get_ancestors %}
         <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.name }}</a> /
     {% endfor %}
