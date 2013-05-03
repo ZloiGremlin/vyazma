@@ -17,7 +17,7 @@
     <h1>{{ category.name }}</h1>
 
     <div class="product-list">
-    {% for product in category.products.all %}
+    {% for product in products %}
         <div class="product">
             <div class="image">
                 {% thumbnail product.get_main_image.image '220x230' upscale=False as img %}

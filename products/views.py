@@ -18,6 +18,11 @@ class CategoryDetail(DetailView):
     template_name = 'category.html'
     context_object_name = 'category'
 
+    def get_context_data(self, **kwargs):
+        ctx = super(CategoryDetail, self).get_context_data(**kwargs)
+        ctx['products'] = Product.objects.filter(category__in=ctx['object'].get_descendants(include_self=True))
+        return ctx
+
 
 class TraderDetail(DetailView):
     slug_field = 'url'
