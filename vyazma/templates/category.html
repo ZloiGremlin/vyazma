@@ -15,6 +15,9 @@
 
 {% block content %}
     <h1>{{ category.name }}</h1>
+    {% if category.description%}
+        <p>{{ category.description }}</p>
+    {% endif %}
 
     <div class="product-list">
     {% for product in products %}
